@@ -1,5 +1,6 @@
 package com.demo.web_services.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,7 +19,8 @@ public class Users implements Serializable {
     private String phone;
     private String password;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client") //lecture304
+    @JsonIgnore
     private final List<Orders> orders = new ArrayList<>();
 
 
