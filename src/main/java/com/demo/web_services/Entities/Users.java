@@ -7,15 +7,17 @@ public class Users implements Serializable {
 
     private  long id;
     private String name;
+    private String email;
     private String phone;
     private String password;
 
 
     public Users() {
     }
-    public Users(long id, String name, String phone, String password) {
+    public Users(long id, String name, String email, String phone, String password) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.phone = phone;
         this.password = password;
     }
@@ -52,16 +54,34 @@ public class Users implements Serializable {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Users users = (Users) o;
-        return getId() == users.getId();
+        return getId() == users.getId() && Objects.equals(getEmail(), users.getEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hash(getId(), getEmail());
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
