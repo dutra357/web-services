@@ -1,10 +1,10 @@
 package com.demo.web_services.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +17,9 @@ public class Users implements Serializable {
     private String email;
     private String phone;
     private String password;
+
+    @OneToMany(mappedBy = "client")
+    private final List<Orders> orders = new ArrayList<>();
 
 
     public Users() {
@@ -66,6 +69,10 @@ public class Users implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Orders> getOrders() {
+        return orders;
     }
 
     @Override
