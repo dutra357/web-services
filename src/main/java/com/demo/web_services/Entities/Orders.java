@@ -1,5 +1,6 @@
 package com.demo.web_services.Entities;
 
+import com.demo.web_services.Entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -14,14 +15,13 @@ public class Orders implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     //Post Java8 -> Instant
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
+    private Integer orderStatus;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-
     //Allocating JsonIgnore here, Jakarta groups the 'orders' (nested).
     //@JsonIgnore
     private Users client;
@@ -29,9 +29,20 @@ public class Orders implements Serializable {
 
     public Orders() {
     }
-    public Orders(Instant moment, Users client) {
+    public Orders(Instant moment, Users client, OrderStatus orderStatus) {
         this.moment = moment;
         this.client = client;
+        setOrderStatus(orderStatus);
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     public Long getId() {

@@ -2,6 +2,7 @@ package com.demo.web_services.Config;
 
 import com.demo.web_services.Entities.Orders;
 import com.demo.web_services.Entities.Users;
+import com.demo.web_services.Entities.enums.OrderStatus;
 import com.demo.web_services.Repositories.OrderRepo;
 import com.demo.web_services.Repositories.UsersRepo;
 import org.springframework.boot.CommandLineRunner;
@@ -31,9 +32,9 @@ public class TestConfig implements CommandLineRunner {
         Users u2 = new Users("Alex Green", "alex@gmail.com", "977777777", "123456");
 
         //Date - ISO8601 format
-        Orders o1 = new Orders(Instant.parse("2019-06-20T19:53:07Z"), u1);
-        Orders o2 = new Orders(Instant.parse("2019-07-21T03:42:10Z"), u2);
-        Orders o3 = new Orders(Instant.parse("2019-07-22T15:21:22Z"), u1);
+        Orders o1 = new Orders(Instant.parse("2019-06-20T19:53:07Z"), u1, OrderStatus.WAITING_PAYMENT);
+        Orders o2 = new Orders(Instant.parse("2019-07-21T03:42:10Z"), u2, OrderStatus.PAID);
+        Orders o3 = new Orders(Instant.parse("2019-07-22T15:21:22Z"), u1, OrderStatus.PAID);
 
         usersRepository.saveAll(Arrays.asList(u1, u2));
 
