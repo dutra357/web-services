@@ -41,8 +41,12 @@ public class UsersResources {
         return ResponseEntity.created(uri).body(user);
     }
 
-//    @PostMapping
-//    public ResponseEntity<Users> insert(@RequestBody Users user) {
-//        return ResponseEntity.status(201).body(service.insert(user));
-//    }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build(); //204 http response pattern. Permits the addition of headers.
+    }
+
+    
+
 }
