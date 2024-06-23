@@ -21,7 +21,6 @@ public class OrderItemPK implements Serializable {
     private Product product;
 
 
-
     public Orders getOrder() {
         return order;
     }
