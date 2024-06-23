@@ -4,7 +4,9 @@ import com.demo.web_services.Entities.Users;
 import com.demo.web_services.Services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,4 +29,20 @@ public class UsersResources {
         Users user = service.findById(id);
         return ResponseEntity.status(200).body(user);
     }
+
+    @PostMapping
+    public ResponseEntity<Users> insert(@RequestBody Users user) {
+        user = service.insert(user);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}").buildAndExpand(user.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(user);
+    }
+
+//    @PostMapping
+//    public ResponseEntity<Users> insert(@RequestBody Users user) {
+//        return ResponseEntity.status(201).body(service.insert(user));
+//    }
 }
