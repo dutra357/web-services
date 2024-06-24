@@ -32,4 +32,17 @@ public class UserService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    public Users update(Long id, Users user) {
+        //'getReferenceById()' not get the user in db, only prepare a mock.
+        Users entity = repository.getReferenceById(id);
+        updateData(entity, user);
+        return repository.save(entity);
+    }
+
+    private void updateData(Users entity, Users user) {
+        entity.setName(user.getName());
+        entity.setEmail(user.getEmail());
+        entity.setPhone(user.getPhone());
+    }
 }

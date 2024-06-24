@@ -47,6 +47,11 @@ public class UsersResources {
         return ResponseEntity.noContent().build(); //204 http response pattern. Permits the addition of headers.
     }
 
-    
+    @PutMapping(value = "{id}")
+    public ResponseEntity<Users> update(@PathVariable Long id, @RequestBody Users user) {
+        user = service.update(id, user);
+        return ResponseEntity.ok().body(user);
+    }
+
 
 }
