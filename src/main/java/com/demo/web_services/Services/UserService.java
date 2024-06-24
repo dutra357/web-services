@@ -3,6 +3,9 @@ package com.demo.web_services.Services;
 import com.demo.web_services.Entities.Users;
 import com.demo.web_services.Exception.ResourceNotFoundException;
 import com.demo.web_services.Repositories.UsersRepo;
+import com.demo.web_services.Services.Exceptions.DatabaseException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,11 +34,17 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (DataIntegrityViolationException msg) {
+            throw new DatabaseException(msg.getMessage());
+        }
     }
 
     public Users update(Long id, Users user) {
-        //'getReferenceById()' not get the user in db, only prepare a mock.
+        //'getReferenceById()' not get the user in db, only prepare a mock obj.
         Users entity = repository.getReferenceById(id);
         updateData(entity, user);
         return repository.save(entity);
